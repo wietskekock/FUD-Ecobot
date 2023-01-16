@@ -25,14 +25,25 @@
         await webcam.play();
         window.requestAnimationFrame(loop);
         
-       
+        document.getElementById("mat-message").style.display="";
         // append elements to the DOM
         document.getElementById("webcam-container").appendChild(webcam.canvas);
-        labelContainer = document.getElementById("label-container");
+        labelContainer = document.getElementById("label-container").style.visibility = "hidden";
         for (let i = 0; i < maxPredictions; i++) { // and class labels
             labelContainer.appendChild(document.createElement("div"));
         }
     }
+
+    function response(){
+        document.getElementById("other-message").style.display="";
+    }
+    
+    //restarting the bot
+    function reset(){
+        document.getElementById("other-message").style.display="none";
+
+    }
+    
 
     async function loop() {
         webcam.update(); // update the webcam frame
@@ -56,6 +67,7 @@
     
         if(maxPrediction) {
             labelContainer.innerHTML = maxPrediction.className;
+           
         }
     }
     

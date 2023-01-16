@@ -33,18 +33,27 @@
     </div>
     <div class="flex justify-end mt-4">
     <button type="button" onclick="init()" class="p-3 max-w-sm mt-3 bg-emerald-500 shadow-lg  rounded-full text-white ">Materialen scan</button>
-    <button type="button" class="p-3 max-w-sm mt-3 ml-3 bg-emerald-500 shadow-lg  rounded-full text-white ">Advies</button>
+    <button type="button" onclick="response()"class="p-3 max-w-sm mt-3 ml-3 bg-emerald-500 shadow-lg  rounded-full text-white ">Advies</button>
     
 
 </div>
+<div id="other-message"   style="display:none" >
+<div class="p-3 max-w-sm mt-5 bg-sky-600 rounded-full shadow-lg flex items-center space-y-1">
+    <h3 id="okay-text" class="text-white d-none">
+        Momenteel is deze functie nog niet beschikbaar :(
+ </h3>
+</div>
+<button type="button" onclick="reset()" class="justify-end p-3 max-w-sm mt-3 bg-emerald-500 shadow-lg  rounded-full text-white ">Opnieuw</button>
+</div>
 
-<div id="mat-message" class="p-3 max-w-sm mt-5 bg-sky-600 rounded-full shadow-lg flex items-center space-y-1">
+
+<div id="mat-message" style="display:none" class="p-3 max-w-sm mt-5 bg-sky-600 rounded-full shadow-lg flex items-center space-y-1">
     <h3 id="okay-text" class="text-white d-none">
         Oké! Laat de materialen scan beginnen!
  </h3>
 </div>
 <div id="webcam-container"></div>
-<div id="label-container"></div>
+<div id="label-container " style="display:none;" class="p-3 max-w-sm mt-5 bg-sky-600 rounded-full shadow-lg flex items-center space-y-1" ></div>
     </div>
 
     
