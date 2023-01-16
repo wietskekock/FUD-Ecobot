@@ -17,6 +17,8 @@
         // Note: the pose library adds "tmImage" object to your window (window.tmImage)
         model = await tmImage.load(modelURL, metadataURL);
         maxPredictions = model.getTotalClasses();
+        labelContainer = document.getElementById("label-container");
+        labelContainer.style.visibility = "hidden";
 
         // Convenience function to setup a webcam
         const flip = true; // whether to flip the webcam
@@ -28,7 +30,7 @@
         document.getElementById("mat-message").style.display="";
         // append elements to the DOM
         document.getElementById("webcam-container").appendChild(webcam.canvas);
-        labelContainer = document.getElementById("label-container").style.visibility = "hidden";
+
         for (let i = 0; i < maxPredictions; i++) { // and class labels
             labelContainer.appendChild(document.createElement("div"));
         }
@@ -43,7 +45,6 @@
         document.getElementById("other-message").style.display="none";
 
     }
-    
 
     async function loop() {
         webcam.update(); // update the webcam frame
@@ -54,20 +55,12 @@
     // run the webcam image through the image model
     async function predict() {
         // predict can take in an image, video or canvas html element
-        const prediction = await model.predict(webcam.canvas);
-        let maxProb = 0;
-        let maxPrediction = null;
-        
-        for (let i = 0; i < maxPredictions; i++) {
-            if(prediction[i].probability > maxProb) {
-                maxProb = prediction[i].probability;
-                maxPrediction = prediction[i];
-            }
-        }
-    
+        const predictions = await model.predict(webcam.canvas);
+        const sortedPredictions = predictions.sort((a, b) => (a.probability || 0) < (b.probability || 0));
+        const maxPrediction = sortedPredictions[0];
+
         if(maxPrediction) {
             labelContainer.innerHTML = maxPrediction.className;
-           
         }
     }
     
