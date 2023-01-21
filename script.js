@@ -4,7 +4,7 @@
     // the link to your model provided by Teachable Machine export panel
     const URL = "https://teachablemachine.withgoogle.com/models/WIMU9ak4b/";
 
-    let model, webcam, labelContainer, maxPredictions;
+    let model, webcam, labelContainer, maxPredictions, outcomeTxt;
 
     // Load the image model and setup the webcam
     async function init() {
@@ -18,7 +18,7 @@
         model = await tmImage.load(modelURL, metadataURL);
         maxPredictions = model.getTotalClasses();
         labelContainer = document.getElementById("label-container");
-        labelContainer.style.visibility = "hidden";
+        
 
         // Convenience function to setup a webcam
         const flip = true; // whether to flip the webcam
@@ -38,11 +38,14 @@
 
     function response(){
         document.getElementById("other-message").style.display="";
+        document.getElementById("opnieuw").style.display="";
+        
     }
     
     //restarting the bot
     function reset(){
         document.getElementById("other-message").style.display="none";
+        document.getElementById("opnieuw").style.display="none"; 
 
     }
 
@@ -55,14 +58,35 @@
     // run the webcam image through the image model
     async function predict() {
         // predict can take in an image, video or canvas html element
-        const predictions = await model.predict(webcam.canvas);
+        const predictions = await model.predict(webcam.canvas); console.table(predictions); 
         const sortedPredictions = predictions.sort((a, b) => (a.probability || 0) < (b.probability || 0));
         const maxPrediction = sortedPredictions[0];
 
+        
         if(maxPrediction) {
             labelContainer.innerHTML = maxPrediction.className;
+            labelContainer.style.display = "";
         }
+
+        if (className = "Hout"){
+            document.getElementById("hout-text").style.display="";
+        } else if (className = "Steen"){
+            document.getElementById("hout-text").style.display="";
+        } else if ( className = "Staal"){
+            document.getElementById("staal-text").style.display="";
+        } else {
+            document.getElementById("hout-text").style.display="";
+        }
+        
+    
+        
+        setTimeout(function() {
+            document.getElementById('webcam-container').style.display="none";}, 2000);
+        
+        
     }
+
+
     
 
 
